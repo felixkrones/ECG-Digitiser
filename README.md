@@ -40,6 +40,8 @@ cd ..
 python -m src.run.digitize -d data_folder -o output_folder
 ```
 
+Where `data_folder` is the folder containing the ECG images to be digitized and `output_folder` is the folder where the outputs will be saved.
+
 
 ## 🔍 Example Results
 

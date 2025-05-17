@@ -1,10 +1,9 @@
 # Run the digitization of ECG images.
-
 import argparse
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
+# import pandas as pd
 import os
 import shutil
 import subprocess
@@ -210,7 +209,7 @@ def cut_binary(mask_to_use, image_rotated):
     signal_masks = {}
     signal_images = {}
     signal_positions = {}
-    mask_values = list(pd.Series(mask_to_use.numpy().flatten()).value_counts().index)
+    # mask_values = list(pd.Series(mask_to_use.numpy().flatten()).value_counts().index)
     possible_lead_names = LEAD_LABEL_MAPPING
     lead_names_in_mask = {
         k: v
@@ -275,7 +274,13 @@ def vectorise(
 def save_plot_masks_and_signals(
     image, masks_cropped, mask_start_position, signals, sig_names, output_folder, filename="record.png"
 ):
-    num_signals = signals.shape[1]
+    try:
+        num_signals = signals.shape[1]
+    except IndexError:
+        print("No signals to plot.")
+        print(f"Signals: {signals}")
+        print(f"Image shape: {image.shape}")
+        return
     fig, axs = plt.subplots(
         1 + num_signals, 1, 
         figsize=(10, 2.5 * (1 + num_signals)),
@@ -400,6 +405,15 @@ def run(args):
         sig_names = list(signals.keys())
         signals = np.array(signal_list).T
 
+        # Check if signal is empty
+        if signals.shape[0] == 0:
+            print(f"=========== Signal is empty for record {record}. ===========")
+            if args.allow_failures:
+                continue
+            else:
+                raise ValueError(f"Signal is empty for record {record}.")
+
+        # Plot and save the image with the masks and signals.
         if args.show_image:
             print(f"Storing image of shape {image_rotated.shape}")
             save_plot_masks_and_signals(
@@ -412,6 +426,7 @@ def run(args):
                 f"{record}.png",
             )
 
+        # Save the signals to a WFDB record.
         if args.verbose:
             print(f"Storing signals for record {record} with shape {signals.shape}")
         if (np.nanmax(signals) > 10) or (np.nanmin(signals) < -10):

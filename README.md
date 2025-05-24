@@ -19,8 +19,8 @@ This repository contains an open-source implementation, including:
 
 ### Install
 ```bash
-git clone https://github.com/felix-krones/ecg-digitiser.git
-cd ecg-digitiser
+https://github.com/felixkrones/ECG-Digitiser.git
+cd ECG-Digitiser
 git lfs install # If not already installed
 git lfs pull # Only to also pull the weights
 conda create -n ecgdig python=3.11 # Or any other package manager

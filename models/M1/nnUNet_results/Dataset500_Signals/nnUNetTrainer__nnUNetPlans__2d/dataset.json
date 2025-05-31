@@ -1,0 +1,22 @@
+{
+    "channel_names": {
+        "0": "Signals"
+    },
+    "labels": {
+        "background": 0,
+        "I": 1,
+        "II": 2,
+        "III": 3,
+        "aVR": 4,
+        "aVL": 5,
+        "aVF": 6,
+        "V1": 7,
+        "V2": 8,
+        "V3": 9,
+        "V4": 10,
+        "V5": 11,
+        "V6": 12
+    },
+    "numTraining": 31028,
+    "file_ending": ".png"
+}

@@ -43,6 +43,21 @@ python -m src.run.digitize -d data_folder -o output_folder
 Where `data_folder` is the folder containing the ECG images to be digitized and `output_folder` is the folder where the outputs will be saved.
 
 
+## 🖼️ Image assumptions for trained model weights
+
+The pretrained segmentation weights expect ECG pages formatted like those
+generated with `ecg-image-generator`:
+
+- **Layout:** Three rows with four 2.5-second leads each. Lead names appear
+  just below the left start of every trace. Rows begin at 0, 2.5 and 5 s.
+- **Rhythm strip:** A fourth row contains a single 10-second lead across the
+  bottom of the page.
+- **Grid:** 25 mm/s horizontally and 10 mm/mV vertically.
+- **Generation settings:** Images were created with random headers, random calibration pulse, random rotation up to 5°, and random black and whites.
+
+For best results, supply images that match this layout and resolution.
+
+
 ## 🔍 Example Results
 
 ### ECG Segmentation
